@@ -15,3 +15,12 @@ jobs:
         run: | 
           echo "Job Cotnext: $JOB_CONTEXT"
           echo "done!"
+
+      - name: install dependencies        
+        working-directory: ./lessons/03-Continious_Integration/03.1-Executing_tests
+        run: composer install --ignore-platform-reqs 
+
+      - name: Run the tests
+        working-directory: ./lessons/03-Continious_Integration/03.1-Executing_tests
+        run: composer phpunit
+        
