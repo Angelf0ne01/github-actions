@@ -9,7 +9,7 @@ jobs:
         os: [ubuntu-latest,windows-latest,macOs-latest]
         php-versions: ['7.2','7.3','7.4']
 
-    name : ${{matrix.os}}
+    name : ${{matrix.os}} PHP ${{matrix.php-versions}}
     steps: 
       - uses: actions/checkout@v2
       - name: hello 
@@ -22,7 +22,7 @@ jobs:
         run: | 
           echo "Job Cotnext: $JOB_CONTEXT"
           echo "done!"
-          
+
       - name: Greting if windows
         if: matrix.os == 'windows-latest'
         run: echo "hey from win2"
