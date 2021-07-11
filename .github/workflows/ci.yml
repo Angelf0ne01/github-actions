@@ -2,7 +2,14 @@ name: first workflow
 on: [push,pull_request]
 jobs: 
   build: 
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
+
+    strategy:
+      matrix: 
+        os: [ubuntu-latest,windows-latest,macOs-latest]
+        php-versions: ['7.2','7.3','7.4']
+
+    name : ${{matrix.os}}
     steps: 
       - uses: actions/checkout@v2
       - name: hello 
@@ -15,7 +22,17 @@ jobs:
         run: | 
           echo "Job Cotnext: $JOB_CONTEXT"
           echo "done!"
-
+          
+      - name: Greting if windows
+        if: matrix.os == 'windows-latest'
+        run: echo "hey from win2"
+      
+      - name: Setup PHPH
+        uses: shivammathur/setup-php@v1
+        with:
+          php-versions: ${{matrix.php-versions}}
+          coverage: none
+      
       - name: install dependencies        
         working-directory: ./lessons/03-continuous_Integration/03.1-Executing_tests
         run: composer install --ignore-platform-reqs
